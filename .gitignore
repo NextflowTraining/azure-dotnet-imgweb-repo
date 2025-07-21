@@ -1,0 +1,23 @@
+# .gitignore for ASP.NET Core / .NET projects
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+.vscode/
+*.dbmdl
+*.log
+*.pdb
+*.cache
+*.zip
+*.nupkg
+*.snupkg
+*.swp
+*.DS_Store
+Thumbs.db
+# Rider
+.idea/
+# Jupyter
+*.ipynb_checkpoints/
