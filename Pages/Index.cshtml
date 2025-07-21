@@ -21,7 +21,11 @@
             </div>
             <div class="card-body">
                 <form method="post" enctype="multipart/form-data">
-                    <div class="custom-file">
+                    <div class="form-group">
+                        <label for="FileName">Image name</label>
+                        <input type="text" class="form-control" asp-for="FileName" placeholder="Enter image name">
+                    </div>
+                    <div class="custom-file mb-2">
                         <input type="file" class="custom-file-input" asp-for="Upload">
                         <label class="custom-file-label">Choose image</label>
                     </div>

@@ -27,6 +27,9 @@ namespace Web.Pages
         [BindProperty]
         public IFormFile Upload { get; set; }
 
+        [BindProperty]
+        public string FileName { get; set; }
+
         public async Task OnGetAsync()
         {
             var imagesUrl = _options.ApiUrl;
@@ -44,10 +47,14 @@ namespace Web.Pages
             {
                 var imagesUrl = _options.ApiUrl;
 
-                using (var image = new StreamContent(Upload.OpenReadStream()))
+                using (var content = new MultipartFormDataContent())
                 {
-                    image.Headers.ContentType = new MediaTypeHeaderValue(Upload.ContentType);
-                    var response = await _httpClient.PostAsync(imagesUrl, image);
+                    var imageContent = new StreamContent(Upload.OpenReadStream());
+                    imageContent.Headers.ContentType = new MediaTypeHeaderValue(Upload.ContentType);
+                    // ใช้ FileName ที่ผู้ใช้กรอก ถ้าไม่กรอกจะใช้ชื่อไฟล์ต้นฉบับ
+                    var fileNameToUse = string.IsNullOrWhiteSpace(FileName) ? Upload.FileName : FileName;
+                    content.Add(imageContent, "file", fileNameToUse);
+                    var response = await _httpClient.PostAsync(imagesUrl, content);
                 }
             }
             return RedirectToPage("/Index");
